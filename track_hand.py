@@ -1,6 +1,7 @@
 import cv2
 import time
 import mediapipe as mp
+import keyboard
 
 
 class ZaHando:
@@ -43,7 +44,9 @@ def call():
         hand_image = okuyasu.find_hando(img)
         as_list = okuyasu.find_pos(hand_image)
         if as_list != 0:
-            print(as_list[4])
+            # qtime.sleep(0.5) # affects the FPS
+            print(as_list)
+            # NOTE: (0, 0) occurs at the top left of the camera space
 
         c_time = time.time()
         fps = 1 / (c_time - p_time)
@@ -53,5 +56,10 @@ def call():
 
         cv2.waitKey(1)
 
-
+        try:
+            if keyboard.is_pressed('q'):
+                break
+        except:
+            break
+        
 call()
